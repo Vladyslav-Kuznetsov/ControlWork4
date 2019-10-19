@@ -12,7 +12,7 @@ namespace ControlWork4
         public static void Main(string[] args)
         {
             File.Create("1.txt").Dispose();
-            FileWatcher fileWatcher = new FileWatcher("1.txt", _loker);
+            FileWatcher fileWatcher = new FileWatcher("1.txt");
             fileWatcher.Change += Change;
             Task.Run(() => fileWatcher.Start());
 
@@ -31,17 +31,19 @@ namespace ControlWork4
             }
         }
 
-        private static void Change()
+        private static void Change(DateTime changeTime)
         {
-            Console.WriteLine("Call event");
-            string str = string.Empty;
+            Console.WriteLine($"Last ghange {changeTime}");
+            string fileContent = string.Empty;
 
             lock (_loker)
             {
-                str = File.ReadAllText("1.txt");
+                fileContent = File.ReadAllText("1.txt");
             }
 
-            if (str == "1")
+            Console.WriteLine($"File content {fileContent}");
+
+            if (fileContent == "1")
             {
                 lock (_loker)
                 {

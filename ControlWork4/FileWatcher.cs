@@ -6,15 +6,13 @@ namespace ControlWork4
 {
     public class FileWatcher
     {
-        public event Action Change;
-        private object _loker;
+        public event Action<DateTime> Change;
         private string _path;
         private DateTime _lastWriteTime;
 
-        public FileWatcher(string path, object loker)
+        public FileWatcher(string path)
         {
             _path = path;
-            _loker = loker;
             _lastWriteTime = File.GetLastWriteTime(_path);
         }
 
@@ -24,15 +22,12 @@ namespace ControlWork4
 
             while (true)
             {
-                lock (_loker)
-                {
-                    lastWriteTime = File.GetLastWriteTime(_path);
-                }
+                lastWriteTime = File.GetLastWriteTime(_path);
 
                 if (_lastWriteTime != lastWriteTime)
                 {
                     _lastWriteTime = File.GetLastWriteTime(_path);
-                    Task.Run(() => Change?.Invoke());
+                    Task.Run(() => Change?.Invoke(_lastWriteTime));
                 }
             }
         }
