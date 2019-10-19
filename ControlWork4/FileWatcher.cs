@@ -28,6 +28,7 @@ namespace ControlWork4
                 {
                     _lastWriteTime = File.GetLastWriteTime(_path);
                     Task.Run(() => Change?.Invoke(_lastWriteTime));
+                    
                 }
             }
         }

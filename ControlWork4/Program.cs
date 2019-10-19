@@ -41,7 +41,7 @@ namespace ControlWork4
                 fileContent = File.ReadAllText("1.txt");
             }
 
-            Console.WriteLine($"File content {fileContent}");
+            Console.WriteLine($"File content ({fileContent})");
 
             if (fileContent == "1")
             {
@@ -51,7 +51,7 @@ namespace ControlWork4
                 }
 
                 Thread.Sleep(10000);
-                Console.WriteLine("File content changed");
+                Console.WriteLine("File content changed to 0 ten seconds ago");
             }
         }
     }
